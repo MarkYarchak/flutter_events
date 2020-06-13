@@ -10,9 +10,23 @@ class ProfilePage extends StatefulWidget with RouteAware {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  static final userProfileSportTypes = [];
 
-  final userSportTypes = List.from(sportTypes); // .map(userProfileSportTypes.contains);
+  profileSportTypes() {
+    final userListSportTypes = ['Футбол'];
+    final userSportTypes = List.from(sportTypes).where((sportType) => userListSportTypes.contains(sportType.title));
+
+    return userSportTypes.length != 0 ? userSportTypes.map((sportType) => ListTile(
+      contentPadding: EdgeInsets.only(bottom: 4, top: 4, left: 16, right: 16),
+      leading: Image(image: AssetImage(sportType.imagePath), width: 45),
+      title: Text(sportType.title, style: TextStyle(fontSize: 16)),
+    )).toList() : <Widget>[
+      ListTile(
+        contentPadding: EdgeInsets.only(bottom: 4, top: 4, left: 16, right: 16),
+        leading: Icon(Icons.close, size: 26),
+        title: Text('Немає улюблених видів', style: TextStyle(fontSize: 16)),
+      )
+    ];
+  }
 
   @override
   didChangeDependencies() async {
@@ -58,14 +72,14 @@ class ProfilePageState extends State<ProfilePage> {
                   Container(
                     padding: EdgeInsets.only(top: 18),
                     child: Text(
-                      'Марк Ярчак • 18 років',
+                      'Влад Войтович • 19 років',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
                   Container(
                     padding: EdgeInsets.only(top: 6),
                     child: Text(
-                      '@markyarchak',
+                      '@vladvojtovich',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                     ),
                   ),
@@ -83,17 +97,7 @@ class ProfilePageState extends State<ProfilePage> {
                         border: Border.all(color: Colors.black54, width: 2)
                     ),
                     child: Column(
-                      children: userSportTypes.length != 0 ? userSportTypes.map((sportType) => ListTile(
-                        contentPadding: EdgeInsets.only(bottom: 4, top: 4, left: 16, right: 16),
-                        leading: Image(image: AssetImage(sportType.imagePath), width: 45),
-                        title: Text(sportType.title, style: TextStyle(fontSize: 16)),
-                      )).toList() : <Widget>[
-                        ListTile(
-                          contentPadding: EdgeInsets.only(bottom: 4, top: 4, left: 16, right: 16),
-                          leading: Icon(Icons.close, size: 26),
-                          title: Text('Немає улюблених видів', style: TextStyle(fontSize: 16)),
-                        )
-                      ],
+                      children: profileSportTypes()
                     ),
                   ),
                 ],

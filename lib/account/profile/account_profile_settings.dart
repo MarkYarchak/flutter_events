@@ -135,7 +135,8 @@ class ProfileSettingsState extends State<ProfileSettings> {
               Padding(
                 padding: EdgeInsets.only(top: 10),
                 child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                  obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
                       hintText: 'Новий пароль',
                       border: OutlineInputBorder()
@@ -171,7 +172,9 @@ class ProfileSettingsState extends State<ProfileSettings> {
                     width: MediaQuery.of(context).size.width * 0.46,
                     child: OutlineButton(
                       child: Text('Вийти'),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(context, '/login', (Route<dynamic> route) => false);
+                      },
                     ),
                   ),
                 ],

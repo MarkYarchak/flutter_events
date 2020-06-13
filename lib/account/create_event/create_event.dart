@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../sport_types.dart';
@@ -40,7 +41,13 @@ class CreateEventState extends State<CreateEvent> {
 
   final newEventForm = EventForm(title: '', skillLevel: 0);
 
-  eventPreviewHandler() {}
+  eventPreviewHandler() {
+    Navigator.pushNamed(
+      context,
+      '/event-preview',
+      arguments: 'my super data', // EventData(),
+    );
+  }
 
   Widget _getSportTypes() {
     return ListView(
@@ -218,34 +225,50 @@ class CreateEventState extends State<CreateEvent> {
                         Row(
                           children: <Widget>[
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.38,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Дата',
-                                  border: OutlineInputBorder(),
-                                  helperText: '',
-                                ),
-                                onTap: () {},
+                              child: CupertinoDatePicker(
+                                onDateTimeChanged: (DateTime receivedDateValue) {
+                                  print(receivedDateValue);
+                                },
+                                use24hFormat: true,
+                                minimumDate: DateTime.now(),
+                                minimumYear: DateTime.now().year,
+                                maximumYear: DateTime.now().year + 1,
+                                backgroundColor: Colors.transparent,
                               ),
+                              height: 200,
+                              width: MediaQuery.of(context).size.width - 86,
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.38,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Час',
-                                  border: OutlineInputBorder(),
-                                  helperText: '',
-                                ),
-                                onTap: () {},
-                              ),
-                            ),
+//                            Container(
+//                              width: MediaQuery.of(context).size.width * 0.38,
+//                              child: TextField(
+//                                decoration: InputDecoration(
+//                                  hintText: 'Дата',
+//                                  border: OutlineInputBorder(),
+//                                  helperText: '',
+//                                ),
+//                                onTap: () {},
+//                              ),
+//                            ),
+//                            Container(
+//                              width: MediaQuery.of(context).size.width * 0.38,
+//                              child: TextField(
+//                                decoration: InputDecoration(
+//                                  hintText: 'Час',
+//                                  border: OutlineInputBorder(),
+//                                  helperText: '',
+//                                ),
+//                                onTap: () {},
+//                              ),
+//                            ),
                           ],
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         ),
                         TextField(
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              hintText: 'Тривалість',
-                              border: OutlineInputBorder()
+                            hintText: 'Тривалість',
+                            border: OutlineInputBorder(),
+                            suffix: Text('хв'),
                           ),
                           onTap: () {},
                         ),
@@ -315,7 +338,6 @@ class CreateEventState extends State<CreateEvent> {
                 ),
               ],
             ),
-            Text(''),
           ],
         ),
       ),
