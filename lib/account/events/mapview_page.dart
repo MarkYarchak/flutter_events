@@ -32,6 +32,54 @@ class _MapViewPageState extends State<MapViewPage> {
 
   @override
   Widget build(BuildContext context) {
+    onMapTap(event) {
+      print(event);
+    }
+
+    Set<Marker> googleMapMarkers = {
+      Marker(
+        infoWindow: InfoWindow(
+          title: 'Гра у теніс',
+          snippet: '50.7395326, 25.32343265'/* (натисніть, щоб відкрити подію)*/,
+        ),
+        onTap: () {},
+        markerId: MarkerId('123'),
+        position: LatLng(50.7395326, 25.32343265),
+      ),
+      Marker(
+        markerId: MarkerId('124'),
+        position: LatLng(50.7395326, 25.33743265),
+      ),
+      Marker(
+        infoWindow: InfoWindow(
+          title: 'Гра у теніс',
+          snippet: '50.75220246, 25.33601995'/* (натисніть, щоб відкрити подію)*/,
+        ),
+        markerId: MarkerId('125'),
+        position: LatLng(50.75220246, 25.33601995),
+      ),
+      Marker(
+        markerId: MarkerId('126'),
+        position: LatLng(50.74315835, 25.33195439),
+      ),
+      Marker(
+        markerId: MarkerId('127'),
+        position: LatLng(50.75711917, 25.32939355),
+      ),
+      Marker(
+        markerId: MarkerId('128'),
+        position: LatLng(50.74809541, 25.32701276),
+      ),
+      Marker(
+        markerId: MarkerId('129'),
+        position: LatLng(50.74909924, 25.34030981),
+      ),
+      Marker(
+        markerId: MarkerId('130'),
+        position: LatLng(50.74597778645547, 25.320142284035683),
+      ),
+    };
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -43,10 +91,13 @@ class _MapViewPageState extends State<MapViewPage> {
       body: GoogleMap(
         mapType: MapType.normal,
         compassEnabled: true,
+        mapToolbarEnabled: false,
         initialCameraPosition: _kGooglePlex,
+        markers: googleMapMarkers,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
+        onTap: onMapTap,
       ),
 //      floatingActionButton: FloatingActionButton.extended(
 //        onPressed: _goToTheLake,
